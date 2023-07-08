@@ -1,0 +1,36 @@
+import java.util.*;
+public class PhoneBook {
+    public static void main(String[] args) {
+        // Создаем HashMap для хранения телефонных номеров
+        Map<String, List<String>> phoneBook = new HashMap<>();
+
+        // Добавляем записи в телефонную книгу
+        addContact(phoneBook, "John Smith", "1234567890");
+        addContact(phoneBook, "John Smith", "9876543210");
+        addContact(phoneBook, "Amy Johnson", "5555555555");
+        addContact(phoneBook, "Emily Davis", "9999999999");
+        addContact(phoneBook, "Emily Davis", "1111111111");
+
+        // Сортируем записи по убыванию числа телефонов
+        List<Map.Entry<String, List<String>>> sortedContacts = new ArrayList<>(phoneBook.entrySet());
+        sortedContacts.sort((entry1, entry2) -> entry2.getValue().size() - entry1.getValue().size());
+
+        // Выводим результат
+        for (Map.Entry<String, List<String>> entry : sortedContacts) {
+            System.out.println(entry.getKey() + ": " + entry.getValue().toString());
+        }
+    }
+
+    // Метод для добавления контакта в телефонную книгу
+    private static void addContact(Map<String, List<String>> phoneBook, String name, String phone) {
+        // Если контакт уже существует, добавляем только новый телефон
+        if (phoneBook.containsKey(name)) {
+            phoneBook.get(name).add(phone);
+        } else {
+            // Иначе создаем новую запись
+            List<String> phones = new ArrayList<>();
+            phones.add(phone);
+            phoneBook.put(name, phones);
+        }
+    }
+}
